@@ -30,6 +30,8 @@
         // set ivars
         _delegate = delegate;
         _scrollView = [scrollView retain];
+        
+        _originalScrollViewContentInset = _scrollView.contentInset;
 
         // observe the contentOffset. NSKeyValueObservingOptionPrior is CRUCIAL!
         [_scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld | NSKeyValueObservingOptionPrior context:NULL];
@@ -145,8 +147,8 @@
             contentInset = UIEdgeInsetsMake(contentInset.top, 0, contentInset.bottom, contentInset.right);
             break;
         case MSRefreshDirectionBottom:
-            refreshingDirection = MSRefreshingDirectionBottom;
-            contentInset = UIEdgeInsetsMake(contentInset.top, contentInset.left, 0, contentInset.right);
+            //refreshingDirection = MSRefreshingDirectionBottom;
+            //contentInset = UIEdgeInsetsMake(contentInset.top, contentInset.left, 0, contentInset.right);
             break;
         case MSRefreshDirectionRight:
             refreshingDirection = MSRefreshingDirectionRight;
@@ -160,7 +162,6 @@
         [UIView setAnimationDuration:0.2];
     }
     _scrollView.contentInset = contentInset;
-
     if (animated) {
         [UIView commitAnimations];
     }
@@ -204,7 +205,7 @@
             refreshingDirection = MSRefreshingDirectionBottom;
             refreshableDirection = MSRefreshableDirectionBottom;
             canEngage = (oldOffset.y + _scrollView.frame.size.height - adjustedContentSize.height  > refreshableInset);
-            contentInset = UIEdgeInsetsMake(contentInset.top, contentInset.left, refreshingInset, contentInset.right);
+            //contentInset = UIEdgeInsetsMake(contentInset.top, contentInset.left, refreshingInset, contentInset.right);
             break;
         case MSRefreshDirectionRight:
             refreshingDirection = MSRefreshingDirectionRight;
